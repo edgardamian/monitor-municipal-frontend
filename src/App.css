@@ -1,8 +1,8 @@
 /* src/App.css */
 :root {
   --primary-bg: #f4f7f9;
-  --header-bg: #2c3e50;
-  --sidebar-bg: #34495e;
+  --header-bg: #3a4d68;
+  --sidebar-bg: #647799;
   --content-bg-default: #ffffff;
   --text-color: #333;
   --sidebar-text-color: #ecf0f1;
@@ -41,19 +41,25 @@ body {
   line-height: 1.2;
 }
 
-.sidebar-toggle {
+.sidebar-toggle, .home-button {
   background: none;
   border: none;
   cursor: pointer;
   padding: 5px;
-  margin-right: 20px;
 }
-.sidebar-toggle svg {
+.sidebar-toggle svg, .home-button svg {
   fill: white;
   transition: fill 0.2s;
 }
-.sidebar-toggle:hover svg {
+.sidebar-toggle:hover svg, .home-button:hover svg {
   fill: #bdc3c7;
+}
+
+.sidebar-toggle {
+  margin-right: 10px;
+}
+.home-button {
+  margin-right: 20px;
 }
 
 .dashboard-layout {
@@ -69,7 +75,7 @@ body {
   color: var(--sidebar-text-color);
   padding: 20px;
   overflow-y: auto;
-  transition: min-width 0.3s ease, width 0.3s ease, padding 0.3s ease;
+  transition: min-width 0.3s ease, width 0.3s ease, padding 0.3s ease, transform 0.3s ease;
 }
 
 .sidebar-collapsed .sidebar {
@@ -77,6 +83,7 @@ body {
   min-width: 0;
   padding: 20px 0;
   overflow: hidden;
+  white-space: nowrap;
 }
 .sidebar-collapsed .sidebar-nav {
   opacity: 0;
@@ -85,7 +92,7 @@ body {
 
 .sidebar-nav h2 {
   margin-top: 0;
-  border-bottom: 1px solid #4a627a;
+  border-bottom: 1px solid #8a9bb9;
   padding-bottom: 10px;
 }
 
@@ -102,23 +109,28 @@ body {
   padding: 12px 10px;
   border-radius: 4px;
   cursor: pointer;
-  transition: background-color 0.2s, box-shadow 0.2s;
+  transition: transform 0.2s, box-shadow 0.2s, filter 0.2s;
   font-size: 1.05em;
+  background-color: var(--eje-color-main);
+  color: white;
+  margin-bottom: 8px;
 }
 
 .eje-item:hover {
-  background-color: #4a627a;
+  filter: brightness(1.15);
+  transform: scale(1.01);
 }
 
 .eje-item-selected > .eje-item {
-  background-color: var(--eje-color-main);
   font-weight: bold;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  box-shadow: 0 6px 12px rgba(0,0,0,0.25);
+  transform: scale(1.03);
+  filter: brightness(1.1);
 }
 
 .nav-score {
-  background-color: rgba(236, 240, 241, 0.8);
-  color: var(--header-bg);
+  background-color: rgba(255, 255, 255, 0.2);
+  color: white;
   font-weight: bold;
   padding: 3px 8px;
   border-radius: 12px;
@@ -126,11 +138,11 @@ body {
 }
 
 .estrategia-submenu {
-  padding-left: 20px;
-  margin: 10px 0;
+  padding: 10px 10px 10px 15px;
+  margin: -8px 0 8px 5px;
   border-left: 3px solid var(--eje-color-main);
-  background-color: rgba(0,0,0,0.1);
-  border-radius: 0 8px 8px 0;
+  background-color: var(--eje-color-light);
+  border-radius: 0 0 8px 8px;
 }
 
 .estrategia-submenu li {
@@ -139,15 +151,17 @@ body {
   border-radius: 4px;
   transition: background-color 0.2s;
   font-size: 0.95em;
+  color: var(--header-bg);
+  font-weight: 500;
 }
 
 .estrategia-submenu li:hover {
-  background-color: #4a627a;
+  background-color: rgba(0,0,0,0.1);
 }
 
 .estrategia-item-selected {
-  background-color: var(--eje-color-light) !important;
-  color: var(--header-bg) !important;
+  background-color: var(--eje-color-main) !important;
+  color: white !important;
   font-weight: bold;
 }
 
@@ -168,6 +182,22 @@ body {
 .content-panel-welcome h2 {
   font-size: 2em;
 }
+
+.content-panel-welcome p {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  font-size: 1.2em;
+  margin-top: 20px;
+}
+
+.welcome-icon {
+  fill: #7f8c8d;
+  display: inline-block;
+  vertical-align: middle;
+}
+
 
 .content-panel-body .content-title {
   color: var(--eje-color-main);
@@ -211,29 +241,43 @@ body {
   font-style: italic;
 }
 
-.detalle-grid { display: grid; grid-template-columns: 1fr 1.5fr; gap: 30px; margin-bottom: 30px; }
-.detalle-columna h3 { color: var(--eje-color-main); border-bottom: 1px solid #eee; padding-bottom: 8px; }
-.detalle-columna ul { list-style-type: none; padding-left: 0; }
-.detalle-columna li { background-color: white; padding: 10px; border-radius: 4px; margin-bottom: 8px; border-left: 4px solid var(--eje-color-main); box-shadow: var(--shadow-color) 0px 2px 4px;}
-.detalle-table { width: 100%; border-collapse: collapse; background-color: white; }
+/* --- CAMBIO REALIZADO AQUÍ --- */
+/* Agrupamos los tres títulos para que compartan el mismo estilo */
+.indicadores-section h3,
+.objetivos-section h3,
+.charts-section h3 {
+  color: var(--eje-color-main);
+  border-bottom: 1px solid #eee;
+  padding-bottom: 8px;
+  margin-bottom: 20px;
+}
+
+.objetivos-section ul {
+    list-style-type: none;
+    padding-left: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 15px;
+}
+
+.objetivos-section li {
+   background-color: white;
+   padding: 15px;
+   border-radius: 4px;
+   border-left: 4px solid var(--eje-color-main);
+   box-shadow: var(--shadow-color) 0px 2px 4px;
+   line-height: 1.5;
+   font-size: 0.95em;
+}
+
+.detalle-table { width: 100%; border-collapse: collapse; background-color: white; box-shadow: var(--shadow-color) 0px 2px 4px; }
 .detalle-table th { background-color: var(--eje-color-main); color: white; }
 .detalle-table td { padding: 10px; border: 1px solid #ddd; text-align: left; }
 .detalle-table td:nth-child(3), .detalle-table td:nth-child(4) { text-align: center; font-weight: bold; }
 
-/* --- ESTILOS PARA LA NUEVA SECCIÓN DE GRÁFICOS --- */
-.charts-section {
-  margin-top: 40px;
-  padding-top: 20px;
-  border-top: 1px solid #ddd;
-}
-.charts-section h3 {
-  text-align: center;
-  color: var(--header-bg);
-  margin-bottom: 20px;
-}
 .charts-container {
   display: grid;
-  grid-template-columns: 1.5fr 1fr; /* El gráfico de barras tendrá más espacio */
+  grid-template-columns: 1.5fr 1fr;
   gap: 30px;
   align-items: flex-start;
 }
@@ -242,5 +286,28 @@ body {
   padding: 20px;
   border-radius: var(--border-radius);
   box-shadow: var(--shadow-color) 0px 4px 12px;
+}
+
+/* --- REGLAS PARA DISEÑO RESPONSIVO --- */
+@media (max-width: 992px) {
+  .charts-container {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+}
+
+@media (max-width: 768px) {
+  .App-header {
+    padding: 15px 20px;
+  }
+  .App-header h1 {
+    font-size: 1em;
+  }
+  .content-panel {
+    padding: 15px;
+  }
+  .objetivos-section ul {
+    grid-template-columns: 1fr;
+  }
 }
 

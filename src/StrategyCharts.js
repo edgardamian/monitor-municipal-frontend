@@ -112,3 +112,5 @@ const StrategyCharts = ({ indicators, color }) => {
 };
 
 export default StrategyCharts;
+
+//cambios
