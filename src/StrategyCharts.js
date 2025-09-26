@@ -1,110 +1,89 @@
 // src/StrategyCharts.js
-import React from 'react';
-import { Bar, Doughnut } from 'react-chartjs-2';
+import React from "react";
+import { Bar, Doughnut } from "react-chartjs-2";
 import {
   Chart as ChartJS,
   CategoryScale,
   LinearScale,
   BarElement,
+  ArcElement,
   Title,
   Tooltip,
   Legend,
-  ArcElement,
-} from 'chart.js';
+} from "chart.js";
 
-// Registramos los componentes de Chart.js que vamos a utilizar
+// Registramos solo lo necesario
 ChartJS.register(
   CategoryScale,
   LinearScale,
   BarElement,
+  ArcElement,
   Title,
   Tooltip,
-  Legend,
-  ArcElement
+  Legend
 );
 
 const StrategyCharts = ({ indicators, color }) => {
-  // Preparamos los datos para los gráficos
-  const labels = indicators.map(ind => ind.indi_nom);
-  const qualifications = indicators.map(ind => ind.indi_califica);
-  const weights = indicators.map(ind => ind.indi_peso);
+  // Etiquetas y datos
+  const labels = indicators.map((ind) => ind.indi_nom);
+  const qualifications = indicators.map((ind) => ind.indi_califica);
+  const weights = indicators.map((ind) => ind.indi_peso);
 
-  // Datos para el gráfico de barras (Calificaciones)
+  // Datos del gráfico de barras
   const barData = {
     labels,
     datasets: [
       {
-        label: 'Calificación (0-100)',
+        label: "Calificación (0-100)",
         data: qualifications,
-        backgroundColor: `${color.main}B3`, // Usamos el color del eje con transparencia
-        borderColor: color.main,
-        borderWidth: 1,
+        backgroundColor: color.main,
       },
     ],
   };
 
-  // Opciones para el gráfico de barras
+  // Opciones del gráfico de barras
   const barOptions = {
     responsive: true,
-    plugins: {
-      legend: { display: false },
-      title: {
-        display: true,
-        text: 'Calificación por Indicador',
-        font: { size: 16 }
+    maintainAspectRatio: false, // 🚀 hace que se adapte al contenedor
+    scales: {
+      y: {
+        beginAtZero: true,
+        max: 100,
       },
     },
-    scales: {
-        y: {
-            beginAtZero: true,
-            max: 100 // La escala siempre será de 0 a 100
-        }
-    }
   };
 
-  // Datos para el gráfico de dona (Pesos)
+  // Datos del gráfico de dona
   const doughnutData = {
     labels,
     datasets: [
       {
-        label: 'Peso (%)',
         data: weights,
-        backgroundColor: [ // Generamos variaciones del color del eje
-            `${color.main}E6`,
-            `${color.light}E6`,
-            `${color.main}99`,
-            `${color.light}99`,
+        backgroundColor: [
+          color.main,
+          color.light,
+          `${color.main}99`,
+          `${color.light}99`,
         ],
-        borderColor: '#ffffff',
-        borderWidth: 2,
       },
     ],
   };
-  
-  // Opciones para el gráfico de dona
+
+  // Opciones del gráfico de dona
   const doughnutOptions = {
-      responsive: true,
-      plugins: {
-          legend: { 
-              position: 'top',
-          },
-          title: {
-              display: true,
-              text: 'Distribución de Peso por Indicador',
-              font: { size: 16 }
-          }
-      }
-  }
+    responsive: true,
+    maintainAspectRatio: false,
+  };
 
   return (
     <div className="charts-section">
       <h3>Análisis Gráfico de Indicadores</h3>
       <div className="charts-container">
         <div className="chart-wrapper">
-          <Bar options={barOptions} data={barData} />
+          <Bar data={barData} options={barOptions} />
         </div>
         <div className="chart-wrapper">
-          <Doughnut options={doughnutOptions} data={doughnutData} />
+          <Doughnut data={doughnutData} options={doughnutOptions} />
         </div>
       </div>
     </div>
@@ -112,5 +91,3 @@ const StrategyCharts = ({ indicators, color }) => {
 };
 
 export default StrategyCharts;
-
-//cambios
